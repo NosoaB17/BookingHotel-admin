@@ -8,20 +8,20 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import HotelTableItem from "./HotelTableItem";
+import { useState, useEffect } from "react";
 
 const columns = [
-  { id: "no", label: "No.", minWidth: 50 },
   { id: "name", label: "Hotel Name", minWidth: 100 },
-  { id: "code", label: "Hotel Code", minWidth: 150 },
+  { id: "description", label: "Hotel Description", minWidth: 150 },
   { id: "address", label: "Hotel Address", minWidth: 150 },
-  { id: "telephone", label: "Hotel telephone", minWidth: 150 },
-  { id: "action", label: "Action", minWidth: 100 },
+  { id: "province", label: "Hotel Province", minWidth: 150 },
+  { id: "kinds", label: "Kinds", minWidth: 100 },
 ];
 
 function HotelsTable(props) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [hotelsData, setHotelsData] = React.useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [hotelsData, setHotelsData] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -32,11 +32,16 @@ function HotelsTable(props) {
     setPage(0);
   };
 
-  React.useEffect(() => {
-    fetch("https://61f92889783c1d0017c449b5.mockapi.io/api/v1/hotels")
+  const headers = {
+    Authorization:
+      "Bearer {eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGUxZmEwNTcwYjg5NDBhZjI1NWU3OSIsImlhdCI6MTY3ODA5NDI3NCwiZXhwIjoxNjc4MDk3ODc0fQ.mZetqiU0wqW5z489KGYD1zGNVsGOrV2G8w4IyUxO51g}",
+  };
+  
+  useEffect(() => {
+    fetch("http://localhost:5000/api/admin/hotel", { headers })
       .then((res) => res.json())
       .then((res) => setHotelsData(res));
-  }, []);
+  },[]);
 
   return (
     <Paper

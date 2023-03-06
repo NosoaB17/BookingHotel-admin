@@ -8,6 +8,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import CustomerTableItem from "./CustomerTableItem";
+import { useState, useEffect } from "react";
 
 const columns = [
   { id: "no", label: "No.", minWidth: 50 },
@@ -23,9 +24,9 @@ const columns = [
 ];
 
 function CustomersTable(props) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [customersData, setCustomersData] = React.useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [customersData, setCustomersData] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -36,8 +37,16 @@ function CustomersTable(props) {
     setPage(0);
   };
 
-  React.useEffect(() => {
-    fetch("https://61f92889783c1d0017c449b5.mockapi.io/api/v1/customers")
+  const headers = {
+    Authorization:
+      "Bearer {eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU1OWRiYTE2MmYwMGEzM2VmNzI4OSIsImlhdCI6MTY3ODExODg0NywiZXhwIjoxNjc4MTIyNDQ3fQ.R-dK3LH3sC5idq28Kc1GR5-9ILX_qqoZamaqNnLllCE}",
+  };
+
+  useEffect(() => {
+    fetch(
+      "http://localhost:5000/api/admin/system/hotel-admins?id=63de1fa0570b8940af255e79&isActivated=true",
+      { headers }
+    )
       .then((res) => res.json())
       .then((res) => setCustomersData(res));
   }, []);

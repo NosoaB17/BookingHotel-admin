@@ -5,16 +5,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import CountrySelect from "../CountrySelect";
 import FormButton from "../FormButton";
 
 function AddCustomerForm() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const [country, setCountry] = React.useState("");
 
   const onSubmit = (data) => {
-    data["country"] = country;
     axios
       .post(
         "https://61f92889783c1d0017c449b5.mockapi.io/api/v1/customers",
@@ -128,9 +125,6 @@ function AddCustomerForm() {
         columns={{ xs: 4, sm: 8, md: 12, lg: 12 }}
         sx={{ marginBottom: 3 }}
       >
-        <Grid item xs={4} sm={8} md={6} lg={6}>
-          <CountrySelect country={country} setCountry={setCountry} />
-        </Grid>
         <Grid item xs={4} sm={8} md={6} lg={6}>
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <Typography sx={{ marginBottom: 1 }}>City</Typography>

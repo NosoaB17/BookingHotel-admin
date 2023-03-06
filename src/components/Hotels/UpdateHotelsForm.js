@@ -6,24 +6,34 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import FormButton from "../FormButton";
+import { useState, useEffect } from "react";
 
 function UpdateHotelsForm({ id }) {
   const [hotelData, setHotelData] = React.useState({});
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
-  React.useEffect(() => {
-    axios
-      .get(`https://61f92889783c1d0017c449b5.mockapi.io/api/v1/hotels/${id}`)
-      .then((res) => setHotelData(res?.data));
-  });
+const [features, getFeatures] = useState([]);
 
+useEffect(() => {
+  loadFeatures();
+}, []);
+
+const loadFeatures = async () => {
+  const result = await axios.get("http://localhost:5000/api/hotelFeature/all");
+  console.log(result.data1);
+  getFeatures(result.data1);
+};
+
+   const config = {
+     headers: {
+       Authorization: `Bearer $eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGUxZmEwNTcwYjg5NDBhZjI1NWU3OSIsImlhdCI6MTY3ODA5NDI3NCwiZXhwIjoxNjc4MDk3ODc0fQ.mZetqiU0wqW5z489KGYD1zGNVsGOrV2G8w4IyUxO51g}`,
+     },
+  };
+  
   const onSubmit = (data) => {
     axios
-      .put(
-        `https://61f92889783c1d0017c449b5.mockapi.io/api/v1/hotels/${id}`,
-        data
-      )
+      .patch(`http://localhost:5000/api/admin/hotel/:hotelId`, data, config)
       .then((res) => {
         if (res?.data) {
           Swal.fire({

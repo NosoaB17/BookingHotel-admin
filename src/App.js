@@ -13,11 +13,13 @@ import UpdateBookingPage from "./pages/Reservations/UpdateBookingPage";
 import AddRoomPage from "./pages/Rooms/AddRoomPage";
 import Rooms from "./pages/Rooms/Rooms";
 import UpdateRoomPage from "./pages/Rooms/UpdateRoomPage";
+import LoginPage from "./pages/Login/LoginPage";
 
 export default function App() {
   return (
     <div>
       <Routes>
+        <Route path="login" element={<LoginPage />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="/*" element={<Dashboard />}>
           <Route path="*" element={<Hotels />} />
@@ -60,7 +62,6 @@ export default function App() {
             path="reservations/updateReservation/:id"
             element={<UpdateBookingPage />}
           />
-
         </Route>
       </Routes>
     </div>

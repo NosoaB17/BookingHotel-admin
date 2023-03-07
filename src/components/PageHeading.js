@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import React from "react";
-import BreadCrumb from "./BreadCrumb";
 
 function PageHeading({ text }) {
   return (
@@ -15,7 +14,7 @@ function PageHeading({ text }) {
         }}
       >
         <h1 style={{ fontSize: "27px", color: "var(--primary)" }}>{text}</h1>
-        <BreadCrumb />
+        
       </Box>
     </>
   );

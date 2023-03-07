@@ -6,24 +6,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import FormButton from "../FormButton";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function UpdateHotelsForm({ id }) {
-  const [hotelData, setHotelData] = React.useState({});
+  const [hotelData, setHotelsData] = useState({});
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-
-const [features, getFeatures] = useState([]);
-
-useEffect(() => {
-  loadFeatures();
-}, []);
-
-const loadFeatures = async () => {
-  const result = await axios.get("http://localhost:5000/api/hotelFeature/all");
-  console.log(result.data1);
-  getFeatures(result.data1);
-};
 
    const config = {
      headers: {

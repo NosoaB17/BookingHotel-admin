@@ -32,7 +32,7 @@ function RoomsTable(props) {
   };
 
   React.useEffect(() => {
-    fetch("https://61f92889783c1d0017c449b5.mockapi.io/api/v1/rooms")
+    fetch("")
       .then((res) => res.json())
       .then((res) => setRoomsData(res));
   }, []);

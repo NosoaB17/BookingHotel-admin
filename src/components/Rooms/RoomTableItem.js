@@ -10,20 +10,18 @@ function RoomTableItem({ row, index }) {
   const navigate = useNavigate();
 
   const handleDelete = (id) => {
-    axios
-      .delete(`https://61f92889783c1d0017c449b5.mockapi.io/api/v1/rooms/${id}`)
-      .then((res) => {
-        if (res?.data) {
-          Swal.fire({
-            icon: "success",
-            title: "Deleted !!",
-            showConfirmButton: false,
-            timer: 1500,
-          }).then((res) => {
-            window.location.reload();
-          });
-        }
-      });
+    axios.delete(``).then((res) => {
+      if (res?.data) {
+        Swal.fire({
+          icon: "success",
+          title: "Deleted !!",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then((res) => {
+          window.location.reload();
+        });
+      }
+    });
   };
 
   return (

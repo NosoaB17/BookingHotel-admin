@@ -1,52 +1,67 @@
-import { FormControl, Grid, TextField, Typography} from "@mui/material";
+import { FormControl, Grid, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import FormButton from "../FormButton";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 
 function AddHotelsForm() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const [features, getFeatures] = useState([]);
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [description, setDescription] = useState("");
+  const [province, setProvince] = useState("");
+  const [kinds, setKinds] = useState("");
 
-   useEffect(() => {
-     loadFeatures();
-   }, []);
-
-   const loadFeatures = async () => {
-     const result = await axios.get(
-       "http://localhost:5000/api/hotelFeature/all");
-     console.log(result.data1);
-     getFeatures(result.data1);
+  const setEnteredName = (e) => {
+    setName(e.target.value);
   };
-  
-  const config = {
-    headers: {
-      Authorization: `Bearer $eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGUxZmEwNTcwYjg5NDBhZjI1NWU3OSIsImlhdCI6MTY3ODA5NDI3NCwiZXhwIjoxNjc4MDk3ODc0fQ.mZetqiU0wqW5z489KGYD1zGNVsGOrV2G8w4IyUxO51g}`,
-    },
+  const setEnteredAddress = (e) => {
+    setAddress(e.target.value);
+  };
+  const setEnteredDescription = (e) => {
+    setDescription(e.target.value);
+  };
+  const setEnteredProvince = (e) => {
+    setProvince(e.target.value);
+  };
+  const setEnteredKinds = (e) => {
+    setKinds(e.target.value);
   };
 
   const onSubmit = (data) => {
-    axios
-      .post("http://localhost:5000/api/admin/system/hotel", data, config)
-      .then((res) => {
-        if (res?.data) {
-          Swal.fire({
-            icon: "success",
-            title: "New Hotel Added",
-            showConfirmButton: false,
-            timer: 1500,
-          }).then((res) => {
-            navigate("/hotels");
-          });
-        }
-      });
+    fetch("http://localhost:5000/api/admin/system/hotel", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        Authorization: `Bearer $eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU1OWRiYTE2MmYwMGEzM2VmNzI4OSIsImlhdCI6MTY3ODI2Nzg0NywiZXhwIjoxNjc4MjcxNDQ3fQ.pb4OhBwMPLfi7cct8Z-6mh63iJqRco_P61_C1Opfnos}`,
+        body: JSON.stringify({
+          name,
+          address,
+          description,
+          province,
+          kinds,
+        }),
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    }).then((res) => {
+      if (res?.data) {
+        Swal.fire({
+          icon: "success",
+          title: "New Hotel Added",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then((res) => {
+          navigate("/hotels");
+        });
+      }
+    });
   };
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -65,6 +80,7 @@ function AddHotelsForm() {
               variant="outlined"
               placeholder="Hotel Name"
               color="success"
+              onChange={setEnteredName}
               {...register("name")}
             />
           </FormControl>
@@ -84,6 +100,7 @@ function AddHotelsForm() {
             <textarea
               placeholder="Hotel Description"
               className="textArea"
+              onChange={setEnteredDescription}
               {...register("description")}
             ></textarea>
           </Box>
@@ -105,6 +122,7 @@ function AddHotelsForm() {
               variant="outlined"
               placeholder="Hotel Address"
               color="success"
+              onChange={setEnteredAddress}
               {...register("address")}
             />
           </FormControl>
@@ -117,6 +135,7 @@ function AddHotelsForm() {
               variant="outlined"
               placeholder="Hotel Province"
               color="success"
+              onChange={setEnteredProvince}
               {...register("province")}
             />
           </FormControl>
@@ -129,12 +148,12 @@ function AddHotelsForm() {
               variant="outlined"
               placeholder="Hotel Kinds"
               color="success"
+              onChange={setEnteredKinds}
               {...register("kinds")}
             />
           </FormControl>
         </Grid>
       </Grid>
-
 
       {/* buttons  */}
       <Box

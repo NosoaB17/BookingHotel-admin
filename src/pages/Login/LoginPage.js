@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const LoginForm = (props) => {
   const [email, setEmail] = useState("");
@@ -32,10 +34,11 @@ const LoginForm = (props) => {
           localStorage.setItem("token", data.data.token);
           localStorage.setItem("username", data.data.username);
           localStorage.setItem("userID", data.data.userID);
+
           window.setTimeout(function () {
             window.location.href = "./";
           }, 1500);
-        } 
+        }
       });
   };
   return (

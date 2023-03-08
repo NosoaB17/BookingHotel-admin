@@ -1,3 +1,4 @@
+import { Login } from "@mui/icons-material";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import GroupIcon from "@mui/icons-material/Group";
 import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
@@ -16,7 +17,6 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import SideBarMenu from "./SideBarMenu";
-
 const drawerWidth = 250;
 
 const menu = [
@@ -99,6 +99,12 @@ const menu = [
         link: "/reservations/updateReservation",
       },
     ],
+  },
+  {
+    id: 5,
+    title: "Login",
+    icon: <Login />,
+    link: "/login",
   },
 ];
 
@@ -210,9 +216,8 @@ export default function Sidebar() {
             noWrap
             component="div"
             sx={{ color: "#000" }}
-          >
-            Logo
-          </Typography>
+          ></Typography>
+          <Avatar alt="Hotel" src={require("../img/logo-green-round.png")} />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -227,11 +232,8 @@ export default function Sidebar() {
 
         {/* user info  */}
         <Box sx={{ display: "flex", alignItems: "center", padding: 2 }}>
-          <Avatar
-            alt="Remy Sharp"
-            src="https://www.topbeautymagazines.com/wp-content/uploads/2020/06/Hairstyles-For-Square-Faces-Women-5.jpg"
-          />
-          <Typography sx={{ marginLeft: 2 }}>Remy Sharp</Typography>
+          <Avatar alt="Son" src="" />
+          <Typography sx={{ marginLeft: 2 }}>Son</Typography>
         </Box>
 
         <Divider />

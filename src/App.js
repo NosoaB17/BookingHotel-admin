@@ -14,16 +14,45 @@ import AddRoomPage from "./pages/Rooms/AddRoomPage";
 import Rooms from "./pages/Rooms/Rooms";
 import UpdateRoomPage from "./pages/Rooms/UpdateRoomPage";
 import LoginPage from "./pages/Login/LoginPage";
+import { useState, useEffect } from "react";
 
-export default function App() {
+function App() {
+  const [backendData, setBackendData] = useState([{}]);
+  const [backendRoomData, setBackendRoomData] = useState([{}]);
+  useEffect(() => {
+    fetch("api/hotel/all")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("api/room/all")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendRoomData(data);
+      });
+  }, []);
+
   return (
     <div>
+      <React.Fragment>
+        {typeof backendData.data?.hotels === "undefined" ||
+        typeof backendRoomData.data?.rooms === "undefined" ? (
+          <p>Loading....</p>
+        ) : (
+          <Dashboard
+            hotelData={backendData.data?.hotels}
+            roomData={backendRoomData.data?.rooms}
+          />
+        )}
+      </React.Fragment>
       <Routes>
-        <Route path="login" element={<LoginPage />} />
         <Route path="/" element={<Dashboard />} />
+        <Route path="login" element={<LoginPage />} />
         <Route path="/*" element={<Dashboard />}>
           <Route path="*" element={<Hotels />} />
-
           {/* hotels */}
           <Route path="hotels" element={<Hotels />} />
           <Route path="hotels/addHotels" element={<AddHotelPage />} />
@@ -67,3 +96,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
